@@ -26,7 +26,7 @@ class NewVisitorTest(unittest.TestCase):
 		email_box = self.browser.find_element_by_name('signup_email')
 		self.assertEqual(
 				email_box.get_attribute('placeholder'),
-				'e-mail address'
+				'email address'
 		)
 
 		username_box = self.browser.find_element_by_name('signup_username')
