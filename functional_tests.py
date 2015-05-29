@@ -47,6 +47,13 @@ class NewVisitorTest(unittest.TestCase):
 				'confirm password'
 		)
 
+		# She sees that there is a submit button at the end of the form
+		signup_button = self.browser.find_element_by_name('signup_submit')
+		self.assertEqual(
+				signup_button.get_attribute('value'),
+				'sign up'
+		)
+
 		# She signs up using the username edith@example.com, username edith, password guest123
 		email_box.send_keys('edith@example.com')
 		username_box.send_keys('edith')
@@ -55,6 +62,10 @@ class NewVisitorTest(unittest.TestCase):
 
 		# Then she presses enter in the final box
 		confirm_password_box.send_keys(Keys.ENTER)
+
+		# Then she should be brought to a screen congratulating her on signing up
+		congrats_message = self.browser.find_element_by_id('signup_congrats').text
+		self.assertIn('edith', congrats_message)
 
 		self.fail("Finish the test!")
 
