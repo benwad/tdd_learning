@@ -2,6 +2,7 @@ from django.core.urlresolvers import resolve
 from django.test import TestCase
 from django.http import HttpRequest
 from django.template.loader import render_to_string
+from django.contrib.auth.models import User
 
 from lists.views import home_page
 
@@ -30,3 +31,15 @@ class HomePageTest(TestCase):
 			'new_username': 'edith'
 		})
 		self.assertEqual(response.content.decode(), expected_html)
+
+class UserModelTest(TestCase):
+
+	def test_saving_new_user(self):
+		new_user = User.objects.create_user('edith', 'edith@example.com', 'guest')
+		new_user.save()
+		my_users = User.objects.all()
+		self.assertEqual(my_users.count(), 1)
+
+		first_user = my_users[0]
+		self.assertEqual(first_user.first_name, 'edith')
+		self.assertEqual(first_user.email, 'edith@example.com')
